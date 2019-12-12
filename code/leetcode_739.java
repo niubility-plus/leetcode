@@ -11,6 +11,12 @@ import java.util.Stack;
  *      2.从右向左，逆序遍历，利用哈希表的原理，用一个数组next来记录该温度对应
  *        的索引，时间复杂度上为O(N)
  *      3.利用栈，逆序遍历，只存储比当前温度大的索引，时间复杂度上为O(N)
+ *      4.逆序 + 跳跃，依然逆序遍历，但是每次的结果利用到了右侧已经计算的结果，
+ *        当我们要计算75元素右侧第一个比他大的元素的时候，由于我们逆序遍历，
+ *        已经计算了71元素的右侧第一个比他大的元素是76，因此我们可以跳过69，72，
+ *        直接将76与75比较即可
+ *
+ *      PS:个人觉得第四种方法，是最巧妙的，用起来贼爽
  */
 class Solution {
     public int[] dailyTemperatures(int[] T) {
@@ -70,6 +76,28 @@ class Solution_03 {
             }
             result[i] = stack.isEmpty() ? 0 : stack.peek() - i;
             stack.push(i);
+        }
+        return result;
+    }
+}
+
+class Solution_04 {
+    public int[] dailyTemperatures(int[] T){
+        int len = T.length;
+        int[] result = new int[len];
+
+        for (int i = len - 2; i >= 0; i--) {
+            for (int j = i + 1; j < len; j += result[j]) {
+                if (T[j] > T[i]){
+                    result[i] = j - i;
+                    break;
+                }
+
+                //当result[j]为0时，说明后面没有比T[j]，即T[j-1]，也就是T[i]更高的温度
+                //如果不跳出的话，这里就是一个无限死循环
+                if (result[j] == 0)
+                    break;
+            }
         }
         return result;
     }
