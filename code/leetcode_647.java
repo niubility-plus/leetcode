@@ -1,2 +1,2 @@
-public class leetcode_647 {
+class leetcode_647 {
 }
