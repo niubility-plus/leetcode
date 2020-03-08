@@ -12,7 +12,7 @@
  */
 
 
-class leetcode_88 {
+class leetcode_088 {
 
     public void merge(int[] nums1, int m, int[] nums2, int n) {
         int index1 = m - 1;
@@ -43,7 +43,7 @@ class leetcode_88 {
     }
 
     public static void main(String[] args) {
-        leetcode_88 leetcode_167 = new leetcode_88();
+        leetcode_088 leetcode_167 = new leetcode_088();
     }
 
 }
